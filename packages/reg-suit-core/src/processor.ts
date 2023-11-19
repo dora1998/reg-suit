@@ -1,4 +1,5 @@
 import path from "path";
+import os from "os";
 import {
   CoreConfig,
   WorkingDirectoryInfo,
@@ -118,6 +119,7 @@ export class RegProcessor {
       enableAntialias: this._config.enableAntialias,
       enableCliAdditionalDetection: ximgdiffConf.invocationType === "cli",
       enableClientAdditionalDetection: ximgdiffConf.invocationType !== "none",
+      concurrency: this._config.concurrency ?? os.cpus().length - 1,
     }) as EventEmitter;
     emitter.on("compare", (compareItem: { type: string; path: string }) => {
       this._logger.verbose(
